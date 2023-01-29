@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Stack } from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Card from "./components/atoms/Card";
 
+interface Cat {
+  name: string;
+  image_link: string;
+  intelligence: number;
+  playfulness: number;
+}
 function App() {
+  const [cats, setCats] = useState<Cat[]>([]);
+
+  useEffect(() => {
+    fetchCats()
+  },[]);
+
+  const fetchCats = async () => {
+    const response = await axios.get<Cat[]>(
+      "https://api.api-ninjas.com/v1/cats?name=abyssinian",
+      { headers: { "X-Api-Key": "lZOkNRcxcRbTIitJ2BjLKw==7ukbxScp64NxhMke" } }
+    );
+    setCats(response.data)
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Stack>
+      {cats.map((cat)=> <Card>{cat.name}</Card>)}
+    </Stack>
   );
 }
 
