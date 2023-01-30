@@ -9,23 +9,29 @@ interface Cat {
   intelligence: number;
   playfulness: number;
 }
+
 function App() {
   const [cats, setCats] = useState<Cat[]>([]);
 
   useEffect(() => {
-    fetchCats()
-  },[]);
+    fetchCats();
+  }, []);
+
 
   const fetchCats = async () => {
     const response = await axios.get<Cat[]>(
-      "https://api.api-ninjas.com/v1/cats?name=abyssinian",
+      "https://api.api-ninjas.com/v1/cats?name=a",
       { headers: { "X-Api-Key": "lZOkNRcxcRbTIitJ2BjLKw==7ukbxScp64NxhMke" } }
     );
-    setCats(response.data)
+    setCats(response.data);
+    console.log(cats);
+    console.log(response.data);
   };
   return (
     <Stack>
-      {cats.map((cat)=> <Card>{cat.name}</Card>)}
+      {cats.map((cat) => (
+        <Card>{cat.name}</Card>
+      ))}
     </Stack>
   );
 }
