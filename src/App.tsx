@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     fetchCats();
-  }, []);
+  },);
 
 
   const fetchCats = async () => {
